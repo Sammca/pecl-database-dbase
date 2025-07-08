@@ -348,13 +348,7 @@ dbhead_t *dbf_open(char *dp, int o_flags)
 		return NULL;
 	}
 
-	if (php_flock(fd, (o_flags == O_RDWR ? LOCK_EX : LOCK_SH))) {
-		close(fd);
-		return NULL;
-	}
-
 	if ((dbh = get_dbf_head(fd)) ==	NULL) {
-		php_flock(fd, LOCK_UN);
 		close(fd);
 		return NULL;
 	}
